@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class MoveToTarget : MonoBehaviour
 {
-    public Vector3 targetPos;
-    float speed = 0.4f;
+    float time = 0;
+    Vector3 originalPos, startPos, targetPos;
 
     void Start()
     {
-        targetPos = transform.position;
+        originalPos = startPos = targetPos = transform.position;
     }
-
-
     void Update()
     {
-        Vector3 vectorToTarget = targetPos - transform.position;
-        if (vectorToTarget.magnitude > 0.01f)
-        {
-            transform.position += vectorToTarget.normalized * speed * Time.deltaTime;
-        }
-        else
-        {
-            transform.position = targetPos;
-        }
+        transform.position = Vector3.Lerp(startPos, targetPos, time);
+        time += Time.deltaTime;
+    }
+    public void MoveTo(Vector3 newTargetPos)
+    {
+        startPos = transform.position;
+        targetPos = newTargetPos;
+        time = 0;
+    }
+    public void MoveBack()
+    {
+        MoveTo(originalPos);
     }
 }

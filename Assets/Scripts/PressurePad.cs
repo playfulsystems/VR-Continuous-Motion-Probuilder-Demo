@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class PressurePad : MonoBehaviour
 {
-    public GameObject ObjectToMove;
-    public Vector3 OpenPos;
-    public Vector3 ClosedPos;
+    public MoveToTarget ObjectToMove;
+    public Vector3 TargetPos;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Red")
         {
-            ObjectToMove.GetComponent<MoveToTarget>().targetPos = OpenPos;
+            ObjectToMove.MoveTo(TargetPos);
         }
     }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Red")
-        { 
-            ObjectToMove.GetComponent<MoveToTarget>().targetPos = ClosedPos;
+        {
+            ObjectToMove.MoveBack();
         } 
     }
 
